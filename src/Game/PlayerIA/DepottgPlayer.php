@@ -15,6 +15,15 @@ class DepottgPlayer extends Player
     public $opponentPaperCount = 0;
     public $opponentScissorsCount = 0;
 
+    // Gets the symbol winning on the given symbol
+    private function GetWinner($symbol) {
+        if ($symbol == parent::rockChoice())
+            return parent::paperChoice();
+        if ($symbol == parent::paperChoice())
+            return parent::scissorsChoice();
+        return parent::rockChoice();
+    }
+
     public function getChoice()
     {
         // -------------------------------------    -----------------------------------------------------
@@ -47,6 +56,7 @@ class DepottgPlayer extends Player
         $paperPositivity = 0;
         $scissorsPositivity = 0;
 
+        // Counting all the inputs of the opponent to make statistics
         if ($this->result->getLastChoiceFor($this->opponentSide)) {
             if ($this->result->getLastChoiceFor($this->opponentSide) == parent::rockChoice())
                 $this->opponentRockCount++;
@@ -56,6 +66,7 @@ class DepottgPlayer extends Player
                 $this->opponentScissorsCount++;
         }
 
+        // Finding the win statistical probability of every move
         if ($this->opponentRockCount + $this->opponentPaperCount + $this->opponentScissorsCount > 0) {
             $rockPositivity = $this->opponentScissorsCount / ($this->opponentRockCount + $this->opponentPaperCount + $this->opponentScissorsCount);
             $paperPositivity = $this->opponentRockCount / ($this->opponentRockCount + $this->opponentPaperCount + $this->opponentScissorsCount);
@@ -79,5 +90,23 @@ class DepottgPlayer extends Player
                 return parent:: scissorsChoice();
             }
         }
+
+        // C'est l'histoire de trois vampires qui parlent, tranquillement, entre amis.
+
+        // Le premier vampire dit :
+        // - Je suis le vampire le plus rapide de la Terre, regardez ce que je sais faire !
+        // Il part en courrant à une vitesse surréaliste.
+        // Il revient une seconde après, la bouche pleine de sang, et dit :
+        // - Vous voyez la maison là-bas ? En une seconde je suis parti, j'ai tué ses quatre habitants, j'ai bu leur sang et je suis revenu.
+
+        // Le deuxième vampire lui dit :
+        // - Quel naze ! Je suis largement plus rapide que ça ! Voyez plutôt.
+        // Il part à une vitesse supérieure à Mach 2, et revient un dixième de seconde après, le visage plein de sang. Il dit :
+        // - Vous voyez le village là-bas ? En un dixième de seconde je suis parti, j'ai tué ses 50 habitants, j'ai bu tout leur sang et je suis revenu !
+
+        // Le troisième dit :
+        // - Y'en a pas un pour rattraper l'autre, ma grand-mère morte va plus vite ! Regardez ce que je sais faire, moi, le vampire le plus rapide de l'univers !
+        // Il part tellement vite que la route s'embrase, et il revient un millionième de seconde plus tard, couvert de sang. Il dit :
+        // - Vous voyez l'arbre là-bas ? Ben moi je l'avais pas vu...
     }
 };
