@@ -36,17 +36,40 @@ class DepottgPlayer extends Player
         // How can i display the result of each round ? $this->prettyDisplay()
         // -------------------------------------    -----------------------------------------------------
 
+        // The positivities are weights used to determine an estimation of the win probability
+        // The higher the positivity is, the bigger the win probability is
+        $rockPositivity = 0;
+        $paperPositivity = 0;
+        $scissorsPositivity = 0;
+
         if ($this->result->getLastChoiceFor($this->opponentSide)) {
             if ($this->result->getLastChoiceFor($this->opponentSide) == parent::scissorsChoice()) {
-                return parent::rockChoice();
+                $rockPositivity = 1;
             }
             if ($this->result->getLastChoiceFor($this->opponentSide) == parent::rockChoice()) {
-                return parent::paperChoice();
+                $paperPositivity = 1;
             }
             if ($this->result->getLastChoiceFor($this->opponentSide) == parent::paperChoice()) {
-                return parent::scissorsChoice();
+                $paperPositivity = 1;
             }
         }
-        return parent::scissorsChoice();
+
+        // Final choice and return, based on the positivities
+        if ($rockPositivity > $paperPositivity) {
+            if ($rockPositivity > $scissorsPositivity) {
+                return parent:: rockChoice();
+            }
+            else  {
+                return parent:: scissorsChoice();
+            }
+        }
+        else {
+            if ($paperPositivity > $scissorsPositivity) {
+                return parent:: paperChoice();
+            }
+            else  {
+                return parent:: scissorsChoice();
+            }
+        }
     }
 };
