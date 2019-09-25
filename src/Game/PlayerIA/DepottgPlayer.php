@@ -49,11 +49,17 @@ class DepottgPlayer extends Player
 
         if ($this->result->getLastChoiceFor($this->opponentSide)) {
             if ($this->result->getLastChoiceFor($this->opponentSide) == parent::rockChoice())
-                return $this->paperChoice();
+                $this->opponentRockCount++;
             if ($this->result->getLastChoiceFor($this->opponentSide) == parent::paperChoice())
-                return $this->scissorsChoice();
+                $this->opponentPaperCount++;
             if ($this->result->getLastChoiceFor($this->opponentSide) == parent::scissorsChoice())
-                return $this->rockChoice();
+                $this->opponentScissorsCount++;
+        }
+
+        if ($this->opponentRockCount + $this->opponentPaperCount + $this->opponentScissorsCount > 0) {
+            $rockPositivity = $this->opponentScissorsCount / ($this->opponentRockCount + $this->opponentPaperCount + $this->opponentScissorsCount);
+            $paperPositivity = $this->opponentRockCount / ($this->opponentRockCount + $this->opponentPaperCount + $this->opponentScissorsCount);
+            $scissorsPositivity = $this->opponentPaperCount / ($this->opponentRockCount + $this->opponentPaperCount + $this->opponentScissorsCount);
         }
 
         // Final choice and return, based on the positivities
