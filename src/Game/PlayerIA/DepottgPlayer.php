@@ -47,6 +47,15 @@ class DepottgPlayer extends Player
         $paperPositivity = 0;
         $scissorsPositivity = 0;
 
+        if ($this->result->getLastChoiceFor($this->opponentSide)) {
+            if ($this->result->getLastChoiceFor($this->opponentSide) == parent::rockChoice())
+                return $this->paperChoice();
+            if ($this->result->getLastChoiceFor($this->opponentSide) == parent::paperChoice())
+                return $this->scissorsChoice();
+            if ($this->result->getLastChoiceFor($this->opponentSide) == parent::scissorsChoice())
+                return $this->rockChoice();
+        }
+
         // Final choice and return, based on the positivities
         if ($rockPositivity > $paperPositivity) {
             if ($rockPositivity > $scissorsPositivity) {
